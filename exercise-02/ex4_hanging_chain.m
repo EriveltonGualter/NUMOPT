@@ -35,7 +35,8 @@ constr = [constr;...
           z(1,N) == 1];
 for i=1:N-1
     constr = [constr;...
-        s(1,i) >= sqrt((y(1,i) - y(1,i+1)).^2 + (z(1,i) - z(1,i+1)).^2) - L_i;
+        s(1,i) >= sqrt((y(1,i) - y(1,i+1)).^2 +...
+                       (z(1,i) - z(1,i+1)).^2) - L_i;
         s(1,i) >= 0];
 end
 constr = [constr; s(1,N) >= 0];
