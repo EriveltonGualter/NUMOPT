@@ -19,8 +19,6 @@ V_g_sum = 0;
 L_i = L / (N - 1);
 for i = 1:N-1
     % TODO: complete the objective function (i.e. potential energy) HERE
-    % d_i = ;
-    % s(1,i) = d_i;  % max(0, d_i);
     V_el_i = D * s(1,i)^2;
     V_el_sum = V_el_sum + V_el_i;
     
@@ -37,7 +35,7 @@ constr = [constr;...
           z(1,N) == 1];
 for i=1:N-1
     constr = [constr;...
-        s(1,i) >= ((y(1,i) - y(1,i+1))^2 + (z(1,i) - z(1,i+1))^2)^0.5 - L_i;
+        s(1,i) >= sqrt((y(1,i) - y(1,i+1)).^2 + (z(1,i) - z(1,i+1)).^2) - L_i;
         s(1,i) >= 0];
 end
 constr = [constr; s(1,N) >= 0];
