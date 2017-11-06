@@ -5,7 +5,7 @@ function plot_structure(D, K)
 % D:    Structure with problem data, created with the load_data.m function
 % K:    Stifness matrix for the optimized cross-sections
 
-close all
+close all;
 
 % flag to plot the structure deformed or not
 PLOT_DEFORMED = 1;
@@ -21,7 +21,8 @@ disp(U(1:2,:))
 
 Sc = 1/max(max(abs(U)))*5; % scaling factor for deformation shape
 if PLOT_DEFORMED
-    disp(['NOTE: deformations are scaled with a factor of ' num2str(Sc) ' to become visible' ])
+    disp(['NOTE: deformations are scaled with a factor of '...
+          num2str(Sc) ' to become visible' ])
 end
 
 C = [D.Coord; D.Coord + Sc*U];
@@ -39,7 +40,8 @@ cmap = flip(cmap,1);
 A    = D.A;
 
 MAXAREA = 200;
-yy = linspace(0,MAXAREA,size(cmap,1)); % generate range of color indices that map to cmap
+% generate range of color indices that map to cmap
+yy = linspace(0,MAXAREA,size(cmap,1));
 cm = spline(yy,cmap',A); % find interpolated color values
 cm(cm>1) = 1;
 cm(cm<0) = 0;
@@ -52,27 +54,30 @@ end
 
 % plot resulting structure
 for i = 1:length(A)
-    h(i) = line([X((i-1)*3+1,DEF) X((i-1)*3+2,DEF)],[X((i-1)*3+1,DEF+1) X((i-1)*3+2,DEF+1)],'color',cm(:,i),'LineWidth',2);
+    h(i) = line([X((i-1)*3+1,DEF) X((i-1)*3+2,DEF)],...
+                [X((i-1)*3+1,DEF+1) X((i-1)*3+2,DEF+1)],'color',...
+                cm(:,i),'LineWidth',2);
 end
 % plot initial position and shape of structure
 for i = 1:length(A)
-    h(i) = line([X((i-1)*3+1,1) X((i-1)*3+2,1)],[X((i-1)*3+1,2) X((i-1)*3+2,2)],'color','cyan','LineStyle',':','LineWidth',1);
+    h(i) = line([X((i-1)*3+1,1) X((i-1)*3+2,1)],...
+                [X((i-1)*3+1,2) X((i-1)*3+2,2)],'color','cyan',...
+                 'LineStyle',':','LineWidth',1);
 end
 
-hold on
+hold('on');
 
 % plot nodes with external force applied
 ind = find(sum(abs(D.Load))>0);
 
 Coord = D.Coord + PLOT_DEFORMED*Sc*U;
 for i=1:length(ind)
-   plot(Coord(1,ind(i)),Coord(2,ind(i)),'or','LineWidth',10) 
+   plot(Coord(1,ind(i)),Coord(2,ind(i)),'or','LineWidth',10); 
 end
 
-title('Optimized structure')
-xlabel('x coordinate')
-ylabel('y coordinate')
-
+title('Optimized structure');
+xlabel('x coordinate');
+ylabel('y coordinate');
 axis([0 250 -50 150])
 
 end

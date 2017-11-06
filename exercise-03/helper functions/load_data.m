@@ -13,7 +13,20 @@ Re = [0 0 1;0 0 1;0 0 1;0 0 1;1 1 1;1 1 1];
 
 % Definition of Nodal loads 
 Lext = -1e2;
-Load = [0 0 0;0 Lext 0;0 0 0;0 Lext 0;0 0 0;0 0 0];
+Load = [0 0 0;      % node 1
+        0 Lext 0;   % node 2
+        0 0 0;      % node 3
+        0 Lext 0;   % node 4
+        0 0 0;      % node 5
+        0 0 0];     % node 6
+
+% Move load to node 1 (variant I):
+Load = [0 Lext 0;       % node 1
+        0 0*Lext 0;     % node 2
+        0 0 0;          % node 3
+        0 0*Lext 0;     % node 4
+        0 0 0;          % node 5
+        0 0 0];         % node 6
 
 % Definition of Modulus of Elasticity
 E = ones(1,size(Con,1))*1e9;
@@ -31,7 +44,8 @@ Fext = Load';
 Fext = Fext(ind);
 
 % Convert to structure array (NOTE: all matrices are transposed!)
-D = struct('Coord', Coord', 'Con', Con', 'Re', Re', 'Load', Load', 'E', E', 'A',A','Ind', ind, 'Fext', Fext');
+D = struct('Coord', Coord', 'Con', Con', 'Re', Re', 'Load', Load',...
+           'E', E', 'A',A','Ind', ind, 'Fext', Fext');
 
 end
 
