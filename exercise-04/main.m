@@ -44,5 +44,6 @@ legend('Gaussian noise', 'Gasussian noise and outliers',...
        'Fitted line (yalmip): no outliers',...
        'Location', 'northwest');
 
+%% Exercise 3:
 
 
