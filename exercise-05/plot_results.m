@@ -1,11 +1,11 @@
-function plot_results( zlog )
+function plot_results( zlog, figName )
 
 if size(zlog,2) == 2
     zlog = zlog';
 end
 
 % Create figure
-figure1 = figure('Position',[1 400 1200 600]);
+figure1 = figure('Position',[1 400 1200 600], 'Name', figName);
 colormap('gray');
 axis square;
 R=0:.002:sqrt(2);
@@ -47,8 +47,6 @@ xlabel('x')
 ylabel('y')
 
 plot(zlog(1,:),zlog(2,:),'r--*')
-
-
 
 end
 
