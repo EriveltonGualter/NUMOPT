@@ -15,3 +15,4 @@ zGN_log = GN();
 plot_results(zGN_log,'GN Method');
 
 % Compare performance of Newton and GN:
+figure('Name', '1b) Performance comparison of Newton and GN');
