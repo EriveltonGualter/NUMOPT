@@ -37,5 +37,12 @@ plot_results(zSD500_log,'Steepest descent: alpha = 500');
 
 %% Exercise 3: Lifted Newton method for root finding problems
 % 3a) Newton method:
+zNR1_log = NewtonRoot(1,'');
+zNR2_log = NewtonRoot(0.1,'');
+zNR3_log = NewtonRoot(100,'');
+
+% 3b) Fixed gradient root finding:
+zNRa_fixed_log = NewtonRoot(1,'fixed');
+zNRb_fixed_log = NewtonRoot(2,'fixed');
 
 
