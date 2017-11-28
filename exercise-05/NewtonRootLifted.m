@@ -25,7 +25,8 @@ t = Inf;       % termination condition
 z_log = [];    % steps logger
 while t > 10^(-3)
     z_log = [z_log, wk];
-    wk1 = wk - M(wk)\F(wk);
+    pk = M(wk)\F(wk);
+    wk1 = wk - pk;
     wk = wk1;
     t = norm(F(wk));
 end

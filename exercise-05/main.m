@@ -15,7 +15,7 @@ zGN_log = GN();
 plot_results(zGN_log,'GN Method');
 
 % Compare performance of Newton and GN:
-figPerf = figure('Name', '1b) Performance comparison of Newton and GN');
+figPerf = figure('Name', '2b) Performance comparison of Newton and GN');
 plot(vecnorm(zN_log,2,2));
 hold('on');
 plot(vecnorm(zGN_log,2,2));
@@ -37,12 +37,32 @@ plot_results(zSD500_log,'Steepest descent: alpha = 500');
 
 %% Exercise 3: Lifted Newton method for root finding problems
 % 3a) Newton method:
-zNR1_log = NewtonRoot(1,'');
-zNR2_log = NewtonRoot(0.1,'');
-zNR3_log = NewtonRoot(100,'');
+w0s = [1; 0.1; 100];  % initial points
+zNR1_log = NewtonRoot(1,'',10^6);
+zNR2_log = NewtonRoot(0.1,'',10^6);
+zNR3_log = NewtonRoot(100,'',10^6);
+disp('Newton Root');
+disp(['Start point: ',num2str(w0s(1)),...
+      ' --> w_opt = ',num2str(zNR1_log(end)),...
+      '; # Iter = ',num2str(length(zNR1_log))]);
+disp(['Start point: ',num2str(w0s(2)),...
+      ' --> w_opt = ',num2str(zNR2_log(end)),...
+      '; # Iter = ',num2str(length(zNR2_log))]);
+disp(['Start point: ',num2str(w0s(3)),...
+      ' --> w_opt = ',num2str(zNR3_log(end)),...
+      '; # Iter = ',num2str(length(zNR3_log))]);
 
 % 3b) Fixed gradient root finding:
-zNRa_fixed_log = NewtonRoot(1,'fixed');
-zNRb_fixed_log = NewtonRoot(2,'fixed');
+a = 1;
+b = 2;
+zNRa_fixed_log = NewtonRoot(a,'fixed',10^6);
+zNRb_fixed_log = NewtonRoot(b,'fixed',10^6);
+disp('Newton Root: Fixed Jacobian');
+disp(['Start point: ',num2str(a),...
+      ' --> w_opt = ',num2str(zNRa_fixed_log(end)),...
+      '; # Iter = ',num2str(length(zNRa_fixed_log))]);
+disp(['Start point: ',num2str(b),...
+      ' --> w_opt = ',num2str(zNRb_fixed_log(end)),...
+      '; # Iter = ',num2str(length(zNRb_fixed_log))]);
 
 

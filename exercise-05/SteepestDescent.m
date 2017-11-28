@@ -6,18 +6,11 @@ function [z_log] = SteepestDescent(alpha)
 J = @(x,y) [200*x^3-200*x*y+x-1;...
             -100*x^2+101*y];
 
+% Hessian:
+B = @(x,y) alpha*eye(2);
+
 % Find minimum of function:
-xk = [-1;-1];  % initial point
-t = Inf;       % termination condition
-z_log = [];    % steps logger
-while t > 10^(-3)
-    z_log = [z_log, xk];
-    pk = J(xk(1),xk(2))/alpha;
-    xk1 = xk - pk;
-    xk = xk1;
-    t = norm(J(xk(1),xk(2)));
-end
-z_log = z_log';
+z_log = newton_optimizer([-1;1],J,B,10000);
 end
 
 

@@ -6,24 +6,19 @@ function [z_log] = GN()
 R = @(x,y) [x-1;...
             10*(y-x^2);...
             y];
+
 % Jacobian of R:
-J = @(x,y) [[1, 0];...
+JR = @(x,y) [[1, 0];...
             [-20*x, 10];...
             [0, 1]];
+        
+% Jacobian:
+J = @(x,y) JR(x,y)'*R(x,y);
+
+% Hessian:
+B = @(x,y) JR(x,y)'*JR(x,y);
 
 % Find minimum of function:
-xk = [-1;-1];  % initial point
-t = Inf;       % termination condition
-z_log = [];    % steps logger
-while t > 10^(-3)
-    z_log = [z_log, xk];
-    JJ = J(xk(1),xk(2));
-    grad = (JJ'*R(xk(1),xk(2)));  % gradient
-    pk = (JJ'*JJ)\grad;
-    xk1 = xk - pk;
-    xk = xk1;
-    t = norm(grad);
-end
-z_log = z_log';
+z_log = newton_optimizer([-1;1],J,B,10000);
 end
 
