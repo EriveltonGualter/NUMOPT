@@ -68,7 +68,8 @@ disp(['Start point: ',num2str(b),...
 % 3c) Lifted Newton:
 w0 = [1;1;1;1];  % w = [w, w^2, w^4, w^8]
 zLN_log = NewtonRootLifted(w0,10000);
-disp(['Lifted Newton solution: w_opt = ', num2str(zLN_log(end,1)),...
-      ' in ', num2str(length(zLN_log)), ' iterations']);
+disp('Lifted Newton:');
+disp(['Start point:', num2str(w0(1)), ' ---> w_opt = ',...
+      num2str(zLN_log(end,1)), ' # Iter = ', num2str(length(zLN_log))]);
 
 
