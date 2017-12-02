@@ -27,7 +27,7 @@ z_log = zeros(max(size(w0)),N);  % allocate logger array
 
 for i=1:N
     z_log(:,i) = wk;
- 
+
     pk = M(wk)\F(wk);
     wk1 = wk - pk;
     if norm(wk1 - wk) <= 10^(-3)  % break if no changes in steps
