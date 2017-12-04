@@ -44,7 +44,7 @@ constr = [constr; s(1,N) >= 0];
 % Set options and solve the problem with quadprog:
 assign(y,0);
 assign(z,0);
-options = sdpsettings('solver','SDPT3','verbose',2,'usex0',1,...
+options = sdpsettings('solver','SDPT3','verbose',2,'usex0',0,...
                       'showprogress',0);
 diagn   = optimize(constr, Vchain, options);
 
