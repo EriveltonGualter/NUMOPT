@@ -43,18 +43,18 @@ end
 % Printing header: iterate number, gradient norm, objective value, step norm, stepsize
 fprintf('It.  \t | ||grad_f||\t | f\t\t | ||dvar||\t | t  \n');
 
-% Main loop
+% Main loop:
 for k = 1 : maxit
     
     % TODO: OBTAIN SEARCH DIRECTION USING CURRENT 'B' and 'J'
-    dx = NaN;
+    dx = (-1)*(B\J);
     
     % Parameters for backtracking with Armijo's condition
     t     = 1.0;    % initial step length
-    beta  = 0.8;    % dhrinking factor
+    beta  = 0.8;    % dshrinking factor
     gamma = 0.1;    % minimal decrease requirement
     
-    x_new = x + t * dx; % candidate for the next step
+    x_new = x + t * dx;  % candidate for the next step
 
     % TODO: IMPLEMENT YOUR BACKTRACKING WITH ARMIJO'S CONDITION HERE
     %       (KEEP SHRINKING 't' AND UPDATING 'x_new' UNTIL CONDITION IS SATISFIED)
@@ -87,14 +87,14 @@ for k = 1 : maxit
         y = x(1:2:2*N);
         z = x(2:2:2*N);
         % Plotting 
-        figure(1)
+        figure(1);
         subplot(2,1,1), plot(y, z,'b--');hold on;
         subplot(2,1,1), plot(y, z, 'Or'); hold off;
-        xlim([-2, 2])
-        ylim([ -3, 1])
-        title('Position of chain at current iterate')
-        subplot(2,1,2), plot(dx)
-        title('full step of each optimization variable (dz_i)')
+        xlim([-2, 2]);
+        ylim([ -3, 1]);
+        title('Position of chain at current iterate');
+        subplot(2,1,2), plot(dx);
+        title('full step of each optimization variable (dz_i)');
         drawnow;
     end
     if norm(J) < tol
@@ -105,11 +105,11 @@ for k = 1 : maxit
 end
 
 % Plot optimal solution 
-figure(1)
+figure(1);
 y = x(1:2:2*N);
 z = x(2:2:2*N);
 subplot(2,1,1), plot(y, z, 'b--');hold on;
-title('Position of chain at optimal solution')
+title('Position of chain at optimal solution');
 subplot(2,1,1), plot(y, z, 'Or'); hold off;
-xlim([-2, 2])
-ylim([ -3, 1])
+xlim([-2, 2]);
+ylim([ -3, 1]);
