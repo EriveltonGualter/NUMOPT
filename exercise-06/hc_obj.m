@@ -22,13 +22,14 @@ LoN = L / (N-1);
 zi = param.zi;
 zf = param.zf;
 
-% Initialize the potential
+% Initialize the potential:
 f = 0;
-% Iterate on the points and update the potential
+
+% Iterate on the points and update the potential:
 for k = 1 : N - 1
    f = f + 0.5 * D * (sqrt( ( y(k+1) - y(k) ).^2 + ( z(k+1) - z(k) ).^2 ) - LoN)^2 + m * g * z(k);
 end
-% Add the last gravitational energy
+% Add the last gravitational energy:
 f = f + z(end) * m * g;
 
 % Adding potential of fixed points (we have an unconstrained problem):
