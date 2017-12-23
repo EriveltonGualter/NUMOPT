@@ -31,7 +31,7 @@ end
 % Add the last gravitational energy
 f = f + z(end) * m * g;
 
-% Adding potential of fixed points (we have an unconstrained problem
+% Adding potential of fixed points (we have an unconstrained problem):
 f = f + 0.5 * D * sum(sqrt( ( zi(1) - y(1) ).^2   + ( zi(2) - z(1) ).^2   ) - LoN)^2;
 f = f + 0.5 * D * sum(sqrt( ( zf(1) - y(end) ).^2 + ( zf(2) - z(end) ).^2 ) - LoN)^2;
 

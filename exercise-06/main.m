@@ -1,7 +1,7 @@
 
 % Hanging chain problem with BFGS and backtracking
 
-clear all; close all; clc;
+clear variables; close all; clc;
 
 plotFigures = true;
 
