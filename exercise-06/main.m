@@ -44,22 +44,26 @@ end
 fprintf('It.  \t | ||grad_f||\t | f\t\t | ||dvar||\t | t  \n');
 
 % Main loop:
+BFGS = true;
 for k = 1 : maxit
     
     % TODO: OBTAIN SEARCH DIRECTION USING CURRENT 'B' and 'J'
-    dx = (-1)*(B\J);
+    p = (-1)*(B\J);
     
     % Parameters for backtracking with Armijo's condition
     t     = 1.0;    % initial step length
-    beta  = 0.8;    % dshrinking factor
+    beta  = 0.45;    % shrinking factor (default: 0.8)
     gamma = 0.1;    % minimal decrease requirement
     
-    x_new = x + t * dx;  % candidate for the next step
+    x_new = x + t * p;  % candidate for the next step
 
     % TODO: IMPLEMENT YOUR BACKTRACKING WITH ARMIJO'S CONDITION HERE
     %       (KEEP SHRINKING 't' AND UPDATING 'x_new' UNTIL CONDITION IS SATISFIED)
     
-    
+    while (hc_obj(x_new,param) >= hc_obj(x,param) + gamma*t*J'*p)
+        t = beta * t;  % shrink t
+        x_new = x + t * p;  % update x_new
+    end
     
     % Assign the step
     [F_new, J_new] = finite_difference(@hc_obj, x_new, param);
@@ -67,11 +71,20 @@ for k = 1 : maxit
     
     % TODO: UPDATE YOUR HESSIAN APPROXIMATION 'B' USING THE BFGS FORMULA HERE (FOR QUESTION 2c ONLY)
     
+    B_new = B;  % defeine approximated new Hessian as actual one.
+    if (BFGS == true)
+        s = x_new - x;
+        y = J_new - J;
+        if ((s'*y) > 0)  % update Hessian only if curvature is positive
+            B_new = B - ((s'*B*s)\(B*(s*s')*B)) + ((s'*y)\(y*y'));
+        end
+    end
     
     % Update variables
     x = x_new;
     J = J_new;
     F = F_new;
+    B = B_new;
 
     % Every 10 iterations print the header again
     if mod(k,10) == 0
@@ -80,7 +93,7 @@ for k = 1 : maxit
     end
     
     % Print some useful information
-    fprintf('%d\t | %f\t | %f\t | %f\t | %f \n', k, norm(J), F, norm(dx), t);
+    fprintf('%d\t | %f\t | %f\t | %f\t | %f \n', k, norm(J), F, norm(p), t);
     
     % plotting
     if plotFigures
@@ -93,7 +106,7 @@ for k = 1 : maxit
         xlim([-2, 2]);
         ylim([ -3, 1]);
         title('Position of chain at current iterate');
-        subplot(2,1,2), plot(dx);
+        subplot(2,1,2), plot(p);
         title('full step of each optimization variable (dz_i)');
         drawnow;
     end
