@@ -21,30 +21,43 @@ h = param.T/param.N;
 Utst = rand(param.N,1);
 
 % a) finite differences on nonlinear part 
+tic;
 [F1, J1] = finite_difference(@Phi, Utst, param);
-J1 = 2*sum(Utst) + J1;  % add derivative of the quadratic term
+J1 = 2*sum(Utst) + J1;   % add derivative of the quadratic term
+dt_FD = toc;
 
-% b) imaginary trick 
+% b) imaginary trick
+tic
 [F2, J2] = i_trick(@Phi, Utst, param);
 J2 = 2*sum(Utst) + J2;   % add derivative of the quadratic term
+dt_IT = toc;
 
 % d) forward AD
+tic
 [F3, J3] = Phi_FAD(Utst, param);
+dt_FAD = toc;
 
 % e) backward AD
+tic
 [F4, J4] = Phi_BAD(Utst, param);
+dt_BAD = toc;
 
-% check results
-disp('Error between imaginary trick and finite differences:')
-disp(' ')
-disp(max(max(abs(J2-J1))))
+% Check results
+disp('*** Cross Errors ***');
+disp(['Imaginary trick to FD:  ',...
+      num2str(max(max(abs(J2-J1))))]);
+disp(['Imaginary trick to FAD: ',...
+      num2str(max(max(abs(J2-J3))))]);
+disp(['Imaginary trick to BAD: ',...
+      num2str(max(max(abs(J2-J4))))]);
+disp(' ');
 
-disp('Error between imaginary trick and forward AD:')
-disp(' ')
-disp(max(max(abs(J2-J3))))
-
-disp('Error between imaginary trick and backward AD:')
-disp(' ')
-disp(max(max(abs(J2-J4))))
+% Show timings:
+disp(['*** Runtime (N = ', num2str(param.N), ') ***']);
+disp(['Finite differences: ', num2str(dt_FD*1000) ,' ms']);
+disp(['Imaginary trick:    ', num2str(dt_IT*1000) ,' ms']);
+disp(['Forward AD:         ', num2str(dt_FAD*1000) ,' ms']);
+disp(['Backward AD:        ', num2str(dt_BAD*1000) ,' ms']);
+disp(' ');
 
 

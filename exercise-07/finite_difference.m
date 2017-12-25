@@ -7,9 +7,9 @@ F = hc_fun(x,param);
 t = sqrt(eps);  % iteration step
 J = zeros(length(x),1);
 for i=1:length(x)
-    xtp = x;  % x+t*p
-    xtp(i) = x(i) + t;
-    J(i) = (hc_fun(xtp,param) - F)/t;
+    p = zeros(length(x),1);
+    p(i) = 1;
+    J(i) = (hc_fun(x+t*p,param) - F)/t;
 end
 end
 
