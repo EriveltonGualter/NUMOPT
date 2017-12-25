@@ -1,18 +1,18 @@
 
 % testing the different functions
-clear all; close all; clc
+clear variables; close all; clc
 
 % number of discretization steps
 param.N = 50;
 
 % init condition
-param.x0 = 0.6;
+param.x0 = 2;
 
 % terminal time
 param.T  = 5;
 
 % terminal weight
-param.q  = 20;
+param.q  = 50;
 
 % interval length
 h = param.T/param.N;
@@ -20,16 +20,18 @@ h = param.T/param.N;
 % random control trajectory
 Utst = rand(param.N,1);
 
-% finite differences on nonlinear part 
+% a) finite differences on nonlinear part 
 [F1, J1] = finite_difference(@Phi, Utst, param);
+J1 = 2*sum(Utst) + J1;  % add derivative of the quadratic term
 
-% imaginary trick 
+% b) imaginary trick 
 [F2, J2] = i_trick(@Phi, Utst, param);
+J2 = 2*sum(Utst) + J2;   % add derivative of the quadratic term
 
-% forward AD
+% d) forward AD
 [F3, J3] = Phi_FAD(Utst, param);
 
-% backward AD
+% e) backward AD
 [F4, J4] = Phi_BAD(Utst, param);
 
 % check results
