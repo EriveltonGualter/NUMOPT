@@ -20,9 +20,11 @@ Utst = rand(param.N,1);
 U  = MX.sym('u',param.N);
 
 % TODO: build Phi expression
-Phi_expr = U;
+Phi_expr = 1;
 
-% Phi_function = MXFunction('Phi',{U},{Phi_expr});
+Phi_function = MXFunction();  % MXFunction('Phi',{U},{Phi_expr});
+return
+
 J_function   = MXFunction('J',{U},{jacobian(Phi_expr,U)});
 
 Phitst = Phi_function({Utst});
