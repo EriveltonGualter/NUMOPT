@@ -2,36 +2,21 @@
 % Derivatives using CASADI
 clear variables; close all; clc
 
-% import module (add casadi folder and subfolders in matlab path before)
+% Import module (add casadi folder and subfolders in matlab path before)
 addpath('/Applications/MATLAB_R2017b.app/casadi-matlabR2015a-v3.3.0');
 import casadi.*
 
-% setup problem parameters
-param.N  = 200;
-param.x0 = 0.6;
+% Setup problem parameters
+param.N  = 50;
+param.x0 = 2;
 param.T  = 5;
-param.q  = 80;
+param.q  = 50;
 h = param.T/param.N;
 
-% Use CasADi opti stack to solve minimization problem (1):
-opti = casadi.Opti();
-
-u = opti.variable(1,param.N);
-x = opti.variable(1,param.N);
-
-opti.minimize((1-u).^2+(x-u.^2).^2);
-opti.subject_to(u.^2+x.^2==1);
-opti.subject_to(x>=u);
-
-opti.solver('ipopt');
-sol = opti.solve();
-
-plot(sol.value(u),sol.value(x),'o');
-
-% % generate random control trajectory
+% % Generate random control trajectory
 % Utst = rand(param.N,1);
 % 
-% % declare symbolic variables
+% % Declare symbolic variables
 % U  = MX.sym('u',param.N);
 % 
 % % TODO: build Phi expression

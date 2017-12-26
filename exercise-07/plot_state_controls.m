@@ -3,11 +3,20 @@ function [] = plot_state_controls(figName, x, u)
 % figName
 
 figure('Name', figName);
-subplot(2,1,1); plot(u);
-xlabel('Control: u');
-subplot(2,1,2); plot(x);
+
+% Plot control:
+subplot(2,1,1); plot(u,'r-.');
+title(figName);
+ylabel('Control: u');
+xlim([1, length(u)]);
+grid('on');
+
+% Plot state:
+subplot(2,1,2); plot(x,'-.');
 ylabel('State: x');
-xlabel('# Iter (discrete time)')
+xlabel('# Iter (discrete time)');
+xlim([1, length(x)]);
+grid('on');
 
 end
 

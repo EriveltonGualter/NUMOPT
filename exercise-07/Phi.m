@@ -1,4 +1,4 @@
-function [ f ] = Phi( U, param )
+function [F] = Phi(U, param)
 
 % Function evaluation of the nonlinear function in the objective based on
 % elementary operations
@@ -8,13 +8,13 @@ x0 = param.x0;
 h  = param.T/N;
 q  = param.q;
 
-X    = zeros(N+1,1);
+X    = zeros(N,1);
 X(1) = x0;
-for k = 1:N
+for k = 1:N-1
     X(k+1) = X(k) + h*((1 - X(k))*X(k) + U(k));
 end
 
-f = q*X(end).^2;
+F = q*X(end).^2;
 
 end
 
