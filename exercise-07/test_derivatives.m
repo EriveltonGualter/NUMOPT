@@ -3,23 +3,13 @@ function [] = test_derivatives(N)
 %   Inputs:
 %       N - number of points
 
-    % number of discretization steps
-    param.N = N;
+    param.N = N;          % number of discretization steps
+    param.x0 = 0.6;       % init condition
+    param.T  = 5;         % terminal time
+    param.q  = 50;        % terminal weight
+    h = param.T/param.N;  % interval length
 
-    % init condition
-    param.x0 = 2;
-
-    % terminal time
-    param.T  = 5;
-
-    % terminal weight
-    param.q  = 50;
-
-    % interval length
-    h = param.T/param.N;
-
-    % random control trajectory
-    Utst = rand(param.N,1);
+    Utst = rand(param.N,1);  % random control trajectory
 
     % 1a) finite differences on nonlinear part 
     tic;
@@ -33,12 +23,12 @@ function [] = test_derivatives(N)
 
     % 1d) forward AD
     tic
-    [F3, J3] = Phi_FAD(Utst, param);
+    [F3, J3] = Phi_FAD(@Phi, Utst, param);
     dt_FAD = toc;
 
     % 1e) backward AD
     tic
-    [F4, J4] = Phi_BAD(Utst, param);
+    [F4, J4] = Phi_BAD(@Phi, Utst, param);
     dt_BAD = toc;
 
     % Check results

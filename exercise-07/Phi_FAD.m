@@ -1,4 +1,4 @@
-function [F,J] = Phi_FAD(U, param)
+function [F,J] = Phi_FAD(hc_fun, U, param)
 % Forward algorithmic differentiation (AD)
 
 N  = length(U);
@@ -18,6 +18,9 @@ end
 
 F = q*X(end).^2;
 J = q*2*W(1:end-1);
+
+% Add derivative of the quadratic term:
+J = 2*U + J;
 
 end
 

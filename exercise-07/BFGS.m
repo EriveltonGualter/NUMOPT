@@ -10,7 +10,7 @@ function [x, u] = BFGS(J_func, obj, param, maxIter, TOL)
 
 % Allocate state and control vectors:
 N = param.N;
-u = 1*ones(N,1);
+u = zeros(N,1);
 
 % Initial Jacobian:
 [F, J] = J_func(obj, u, param);
@@ -42,7 +42,7 @@ for k=1:maxIter
     while (obj(u_new,param) > obj(u,param) + gamma*t*J'*p)
         t = beta * t;       % shrink t
         u_new = u + t * p;  % update u_new
-        if t <= 1e-2  % ensures not stucking in backtracking
+        if t <= 1e-3  % ensures not stucking in backtracking if J has NaN
             break;
         end
     end

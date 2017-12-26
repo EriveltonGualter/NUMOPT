@@ -14,6 +14,6 @@ for i=1:N
 end
 
 % Add derivative of the quadratic term:
-J = 2*sum(x) + J;
+J = 2*x + J;
 end
 

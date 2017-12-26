@@ -11,6 +11,6 @@ for i=1:length(x)
     p(i) = 1;
     J(i) = imag(hc_fun(x+1j*t*p,param))/t;
 end
-J = 2*sum(x) + J;   % add derivative of the quadratic term
+J = 2*x + J;   % add derivative of the quadratic term
 end
 
