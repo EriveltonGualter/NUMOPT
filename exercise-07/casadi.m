@@ -13,28 +13,41 @@ param.T  = 5;
 param.q  = 80;
 h = param.T/param.N;
 
-% generate random control trajectory
-Utst = rand(param.N,1);
+% Use CasADi opti stack to solve minimization problem (1):
+opti = casadi.Opti();
 
-% declare symbolic variables
-U  = MX.sym('u',param.N);
+u = opti.variable(1,param.N);
+x = opti.variable(1,param.N);
 
-% TODO: build Phi expression
-Phi_expr = 1;
+opti.minimize((1-u).^2+(x-u.^2).^2);
+opti.subject_to(u.^2+x.^2==1);
+opti.subject_to(x>=u);
 
-Phi_function = MXFunction();  % MXFunction('Phi',{U},{Phi_expr});
-return
+opti.solver('ipopt');
+sol = opti.solve();
 
-J_function   = MXFunction('J',{U},{jacobian(Phi_expr,U)});
+plot(sol.value(u),sol.value(x),'o');
 
-Phitst = Phi_function({Utst});
-F1 = full(Phitst{1});
-J1 = J_function({Utst});
-J1 = full(J1{1});
-
-% Compare accuracy with imaginary trick
-[F2, J2] = i_trick(@Phi, Utst, param);
-
-disp('Error between imaginary trick and casadi:')
-disp(' ')
-disp(max(max(abs(J1-J2))))
+% % generate random control trajectory
+% Utst = rand(param.N,1);
+% 
+% % declare symbolic variables
+% U  = MX.sym('u',param.N);
+% 
+% % TODO: build Phi expression
+% Phi_expr = 1;
+% 
+% Phi_function = MXFunction('Phi',{U},{Phi_expr});
+% J_function   = MXFunction('J',{U},{jacobian(Phi_expr,U)});
+% 
+% Phitst = Phi_function({Utst});
+% F1 = full(Phitst{1});
+% J1 = J_function({Utst});
+% J1 = full(J1{1});
+% 
+% % Compare accuracy with imaginary trick
+% [F2, J2] = i_trick(@Phi, Utst, param);
+% 
+% disp('Error between imaginary trick and casadi:')
+% disp(' ')
+% disp(max(max(abs(J1-J2))))

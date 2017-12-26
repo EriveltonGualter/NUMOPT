@@ -36,11 +36,13 @@ function [] = test_derivatives(N)
     % 1d) forward AD
     tic
     [F3, J3] = Phi_FAD(Utst, param);
+    J3 = 2*sum(Utst) + J3;   % add derivative of the quadratic term
     dt_FAD = toc;
 
     % 1e) backward AD
     tic
     [F4, J4] = Phi_BAD(Utst, param);
+    J4 = 2*sum(Utst) + J4;   % add derivative of the quadratic term
     dt_BAD = toc;
 
     % Check results
