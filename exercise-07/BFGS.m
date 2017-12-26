@@ -42,7 +42,9 @@ for k=1:maxIter
     while (obj(u_new,param) > obj(u,param) + gamma*t*J'*p)
         t = beta * t;       % shrink t
         u_new = u + t * p;  % update u_new
-        if t <= 1e-3  % ensures not stucking in backtracking if J has NaN
+        
+        % Ensures not stucking in backtracking if J has NaN:
+        if t <= 0.2  % 1e-2 is samllest t
             break;
         end
     end
