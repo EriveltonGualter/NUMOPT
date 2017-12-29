@@ -1,4 +1,4 @@
-function [F] = Phi(U, param)
+function [ F ] = Phi( U, param )
 
 % Function evaluation of the nonlinear function in the objective based on
 % elementary operations
