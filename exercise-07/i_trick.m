@@ -4,7 +4,7 @@ function [F, J] = i_trick(hc_fun, x, param)
 
 F = hc_fun(x,param);
 
-t = 1e-100;  % can be choosen very small due to no cancellation in numerator
+t = sqrt(eps);  % can be choosen very small due to no cancellation in numerator
 J = zeros(length(x),1);
 for i=1:length(x)
     p = zeros(length(x),1);

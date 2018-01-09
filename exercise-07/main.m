@@ -5,6 +5,7 @@
 clc;
 close all;
 clear variables;
+addpath('/Applications/MATLAB_R2017b.app/casadi-matlabR2015a-v3.3.0');
 
 %% Test derivatives:
 disp('*** Testing derivatives ***');
@@ -27,11 +28,11 @@ N = param.N;
 opti = casadi.Opti();
 
 u = opti.variable(N,1);
-x = opti.variable(N,1);
+x = opti.variable(N+1,1);
 
 opti.minimize(u'*u + param.q*x(end)^2);
 opti.subject_to(x(1) == param.x0);
-for k=1:param.N-1
+for k=1:param.N
     opti.subject_to(x(k+1) == x(k) + h*((1-x(k))*x(k) + u(k)));
 end
 

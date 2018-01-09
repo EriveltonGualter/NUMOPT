@@ -40,8 +40,8 @@ for k=1:maxIter
     % Backtracking with Armijo's condition
     % (keep shrinking 't' and updating 'u_new' until condition is satisfied)
     while (obj(u_new,param) > obj(u,param) + gamma*t*J'*p)
-        t = beta * t;       % shrink t
-        u_new = u + t * p;  % update u_new
+        t = beta*t;       % shrink t
+        u_new = u + t*p;  % update u_new
         
         % Ensures not stucking in backtracking if J has NaN:
         if t <= 0.2  % Samllest t: 1e-2; Optimal t: 0.2
@@ -77,9 +77,10 @@ x = zeros(N,1);
 N = length(u);
 h  = param.T/N;
 x(1) = param.x0;
-for k = 1:param.N
+for k = 1:param.N-1
     x(k+1) = x(k) + h*((1 - x(k))*x(k) + u(k));
 end
+
 
 end
 
