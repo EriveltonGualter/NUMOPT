@@ -59,7 +59,6 @@ for k=1:maxIter
     B = B_new;
     
     % Break if TOL reached:
-    % disp(['#Iter: ', num2str(k),'; norm(J) = ', num2str(norm(J))]);
     if norm(J) < TOL
         disp(['BFGS: Convergence achieved. #Iter: ',...
               num2str(k), ' of ', num2str(maxIter)]);
