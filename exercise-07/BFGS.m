@@ -18,15 +18,7 @@ u = zeros(N,1);
 % Initial Hessian approximation
 B = eye(length(u));
 
-for k=1:maxIter
-    % Break if TOL reached:
-    % disp(['#Iter: ', num2str(k),'; norm(J) = ', num2str(norm(J))]);
-    if norm(J) < TOL
-        disp(['BFGS: Convergence achieved. #Iter: ',...
-              num2str(k), ' of ', num2str(maxIter)]);
-        break;
-    end
-    
+for k=1:maxIter    
     % Obtain search direction using current B und J:
     p = (-1)*(B\J);
     
@@ -57,7 +49,7 @@ for k=1:maxIter
     s = u_new - u;
     y = J_new - J;
     if ((s'*y) > 0)  % update Hessian only if curvature is positive
-        B_new = B - ((s'*B*s)\(B*(s*s')*B)) + ((s'*y)\(y*y'));
+        B_new = B - (B*(s*s')*B)/(s'*B*s) + (y*y')/(s'*y);
     end
     
     % Update variables
@@ -65,6 +57,14 @@ for k=1:maxIter
     J = J_new;
     F = F_new;
     B = B_new;
+    
+    % Break if TOL reached:
+    % disp(['#Iter: ', num2str(k),'; norm(J) = ', num2str(norm(J))]);
+    if norm(J) < TOL
+        disp(['BFGS: Convergence achieved. #Iter: ',...
+              num2str(k), ' of ', num2str(maxIter)]);
+        break;
+    end
 end
 
 if k == maxIter
@@ -73,11 +73,11 @@ if k == maxIter
 end
 
 % Evaluate state:
-x = zeros(N,1);
+x = zeros(N+1,1);
 N = length(u);
 h  = param.T/N;
 x(1) = param.x0;
-for k = 1:param.N-1
+for k = 1:param.N
     x(k+1) = x(k) + h*((1 - x(k))*x(k) + u(k));
 end
 
