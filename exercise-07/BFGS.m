@@ -36,7 +36,7 @@ for k=1:maxIter
         u_new = u + t*p;  % update u_new
         
         % Ensures not stucking in backtracking if J has NaN:
-        if t <= 0.2  % Samllest t: 1e-2; Optimal t: 0.2
+        if t <= 0.2  % Optimal t: 0.2
             break;
         end
     end

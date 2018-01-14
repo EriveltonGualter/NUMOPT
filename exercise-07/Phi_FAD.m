@@ -25,7 +25,7 @@ for i=1:N
     for k = 1:N
         % x(k+1) = (1+h)*x(k) - h*x(k)^2 + h*u(k)
         
-        % I) Direct approach:
+%         % I) Direct approach:
 %         % Create variables for each operation and derivatives of them:
 %         ax = (1+h)*x(k);
 %         bx = -h*x(k)*x(k);
@@ -47,7 +47,7 @@ for i=1:N
         [x(k+1), xDot(k+1)] = fadAdd(1,Ax,cx,AxDot,cxDot);
     end
     % Multiplication q * xN^2
-    % I) Direct approach:
+%     % I) Direct approach:
 %     F = q*x(end)*x(end);
 %     J(i) = q*2*(x(end)*xDot(end) + x(end)*xDot(end));
     
