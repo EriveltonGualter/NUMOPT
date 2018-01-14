@@ -67,3 +67,9 @@ disp('Running BFGS with FAD:');
 plot_state_controls('BFGS with FAD',X,U);
 disp(' ');
 
+%% BFGS with BAD of (1):
+disp('Running BFGS with BAD:');
+[X,U] = BFGS(@Phi_BAD, @Phi, param, maxIter, TOL);
+plot_state_controls('BFGS with BAD',X,U);
+disp(' ');
+

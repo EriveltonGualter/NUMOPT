@@ -31,7 +31,7 @@ for k=1:maxIter
     
     % Backtracking with Armijo's condition
     % (keep shrinking 't' and updating 'u_new' until condition is satisfied)
-    while (obj(u_new,param) > obj(u,param) + gamma*t*J'*p)
+    while (F > F + gamma*t*J'*p)
         t = beta*t;       % shrink t
         u_new = u + t*p;  % update u_new
         
@@ -79,7 +79,6 @@ x(1) = param.x0;
 for k = 1:param.N
     x(k+1) = x(k) + h*((1 - x(k))*x(k) + u(k));
 end
-
 
 end
 
