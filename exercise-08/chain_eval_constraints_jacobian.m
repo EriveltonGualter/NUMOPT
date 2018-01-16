@@ -8,6 +8,12 @@ function [J] = chain_eval_constraints_jacobian(x, param)
 %       J - jacobian of constraints at point x
 %  
 
-J = 0;
+N = param.N;
+
+xsym = sym('x',[2*N;1]);
+[~, CeqSym] = chain_constraints(xsym, param);
+J = jacobian(CeqSym, xsym);
+J = subs(J, xsym, x);
+
 end
 

@@ -13,6 +13,14 @@ param = struct('N',23,'L',5,'m',.2,'g',9.81,'xi',[-2 1],'xf',[2 1],...
 y = linspace(param.xi(1),param.xf(1),param.N)';
 z = linspace(param.xi(2),param.xf(2),param.N)';
 
+% % LICQ violation fixing point:
+% param.nFixed = param.N - 1;
+% param.xFixed = [param.L/(param.N - 1) 1];
+%       or
+% % Some fun fixing point:
+% param.nFixed = 12;
+% param.xFixed = [0.1 .8];
+
 if param.nFixed > 0  % need of fixed constraints
     y(param.nFixed) = param.xFixed(1);
     z(param.nFixed) = param.xFixed(2);
@@ -33,7 +41,7 @@ x = [y;z];
 objFun = @(x)(chain_objective(x,param));
 
 % Nonlinear constraints:
-nonlcon = @(x)(chain_constraints(x,param));
+nonLinConstr = @(x)(chain_constraints(x,param));
 
 % Load default options for fmincon:
 opts = optimoptions('fmincon');
@@ -44,11 +52,12 @@ options.StepTolerance = 1e-6;
 options.FunctionTolerance = 1e-6;
 
 % Call fmincon:
-[x,~,~,~,lambdas] = fmincon(objFun,x,[],[],[],[],[],[],nonlcon,opts);
+[x,~,~,~,lambdas] = fmincon(objFun,x,[],[],[],[],[],[],...
+                                nonLinConstr,opts);
 
 % Evaluate Jacobian of constraints at the optimal solution:
-[~,Ceq] = chain_constraints(x,param);  % get number of equality constraints
-[grad_g] = chain_eval_constraints_jacobian(x, param);
+[~,Ceq] = chain_constraints(x,param);  % get equality constraints only
+grad_g = chain_eval_constraints_jacobian(x,param);
 
 % Check wether LICQ holds:
 disp('Check LICQ:');

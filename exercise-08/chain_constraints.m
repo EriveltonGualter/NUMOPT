@@ -8,40 +8,36 @@ function [C,Ceq] = chain_constraints(x,param)
 %       f - chain objective function
 %
 
+N = param.N;
+
 % Number of total constraints (N-1 + 4 + 2):
 % N-1 - nonlinear constraints
 % 4 - constraints for (y1,z1), (yN,zN)
-% 2 - constraint for fixed mass xFixed = (yFixed, zFixed) (only if nFixed <= 0)
-numConstr = param.N+5;
+% 2 - constraint for fixed mass xFixed = (yFixed, zFixed) (only if nFixed <= 0)  
 
-if param.nFixed <= 0  % no fixed point
-    numConstr = param.N+3;  % last two constraints are not needed
-end  
-
-y = x(1:param.N);
-z = x(param.N+1:end);
+y = x(1:N);
+z = x(N+1:end);
 
 C = [];  % no inequality constraints
 
 % Define equality constraints:
-Li = param.L/(param.N - 1);  % length of i-th chain element
-Ceq = zeros(numConstr,1);
+Li = param.L/(N - 1);  % length of i-th chain element 
 
-for i=1:param.N-1
-    Ceq(i) = (y(i) - y(i+1))^2 + (z(i) - z(i+1))^2 - Li^2;
-end
+Ceq = [];
 
-Ceq(param.N) = y(1) - param.xi(1);
-Ceq(param.N+1) = y(param.N) - param.xf(1);
+Ceq = [Ceq; (y(1:N-1) - y(2:N)).^2 + (z(1:N-1) - z(2:N)).^2 - Li^2];
 
-Ceq(param.N+2) = z(1) - param.xi(2);
-Ceq(param.N+3) = z(param.N) - param.xf(2);
+Ceq = [Ceq; y(1) - param.xi(1)];
+Ceq = [Ceq; y(N) - param.xf(1)];
+
+Ceq = [Ceq; z(1) - param.xi(2)];
+Ceq = [Ceq; z(N) - param.xf(2)];
 
 % Fixed mass constraint:
 if param.nFixed > 0  % fixed point
     % Last two constraints are needed:
-    Ceq(param.N+4) = y(param.nFixed) - param.xFixed(1);
-    Ceq(param.N+5) = z(param.nFixed) - param.xFixed(2);
+    Ceq = [Ceq; y(param.nFixed) - param.xFixed(1)];
+    Ceq = [Ceq; z(param.nFixed) - param.xFixed(2)];
 end  
 
 end
