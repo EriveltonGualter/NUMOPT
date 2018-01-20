@@ -17,6 +17,7 @@ ylabel('State: x');
 xlabel('# Iter (discrete time)');
 xlim([1, length(x)]);
 grid('on');
+legend(['x_{min} = ',num2str(min(x))]);
 
 end
 
