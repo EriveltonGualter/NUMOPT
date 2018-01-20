@@ -13,7 +13,7 @@ N = param.N;
 u = zeros(N,1);
 
 % Initial Jacobian:
-[F, J] = J_func(obj, u, param);
+[F,J] = J_func(obj, u, param);
 
 % Initial Hessian approximation
 B = eye(length(u));
@@ -42,7 +42,7 @@ for k=1:maxIter
     end
     
     % Assign the step:
-    [F_new, J_new] = J_func(obj, u_new, param);
+    [F_new,J_new] = J_func(obj,u_new,param);
     
     % Update Hessian approximation using BFGS formula:
     B_new = B;
@@ -61,14 +61,14 @@ for k=1:maxIter
     % Break if TOL reached:
     if norm(J) < TOL
         disp(['BFGS: Convergence achieved. #Iter: ',...
-              num2str(k), ' of ', num2str(maxIter)]);
+              num2str(k),' of ',num2str(maxIter)]);
         break;
     end
 end
 
 if k == maxIter
     disp(['BFGS: Convergence NOT achieved. #Iter: ',...
-          num2str(k), ' of ', num2str(maxIter)]);
+          num2str(k),' of ',num2str(maxIter)]);
 end
 
 % Evaluate state:
