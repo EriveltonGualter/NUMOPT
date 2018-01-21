@@ -11,8 +11,7 @@ maxNumIter = 5000;  % maximal number of iterations
 % Starting parameters
 w = (-1)*[1;1;1];  % additional supporting variable: [x1,x2,lambda]
 
-% First order optimality conditions (left sinde)
-% use equation (12.30) from the script:
+% First order optimality conditions (left sinde):
 F = @(w) ([-2*w(3)*w(1);
            1 - 2*w(3)*w(2);
            w(1)^2 + w(2)^2 - R]);
@@ -22,7 +21,8 @@ B = @(w) ([-2*w(3), 0,       2*w(1);
            0,       -2*w(3), 2*w(2);
            2*w(1),  2*w(2),  0     ]);
 
-% Run Newton-Lagrange method (fmincon_example solition: [0,-1]):
+% Run Newton-Lagrange method (fmincon_example solition: [0,-1])
+% use Algorithm 7 form the script on p. 97:
 epsilon = 1e-10;
 for k=1:maxNumIter
     if norm(F(w)) <= epsilon  % should be in [0, epsilon)
