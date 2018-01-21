@@ -23,7 +23,7 @@ B = @(w) ([-2*w(3), 0,       2*w(1);
            2*w(1),  2*w(2),  0     ]);
 
 % Run Newton-Lagrange method (fmincon_example solition: [0,-1]):
-epsilon = 1e-3;
+epsilon = 1e-10;
 for k=1:maxNumIter
     if norm(F(w)) <= epsilon  % should be in [0, epsilon)
         break;
@@ -36,4 +36,3 @@ end
 
 % Plot result:
 plot_result([w(1);w(2)],R,'Exercise 8.b-c');
-
