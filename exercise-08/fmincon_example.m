@@ -25,20 +25,10 @@ opts.MaxFunEvals = 5000;
 % Dual multiplier of nonlinear equality constraint: lambdas.eqnonlin:
 
 % Plot result:
-ang = 0:0.01:2*pi; 
-xp  = param.R*cos(ang);
-yp  = param.R*sin(ang);
-plot(xp, yp);
-hold('on');
-plot(x_opt(1),x_opt(2),'rx','MarkerSize',10);
-axis(param.R*[-1.1 1.1 -1.1 1.1]);
-title('A simple example on equality constrained optimization');
-legend('Equality constraint','Optimal solution');
+plot_result(x_opt,param.R,...
+            'A simple example on equality constrained optimization');
 
-disp('Optimal solution:');
-disp(x_opt);
-
-% check constraint violation at solution
+% check constraint violation at solution:
 [C, Ceq] = con(x_opt);
 disp('Constraint violation at solution:');
 disp(abs(Ceq));
