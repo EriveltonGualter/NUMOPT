@@ -16,6 +16,7 @@ plot(x1eq,x2eq);
 hold('on');
 plot(x_opt(1),x_opt(2),'rx','MarkerSize',10);
 axis(R*[-1.1 1.1 -1.1 1.1]);
+axis('equal');
 title(titleName);
 legend('Inequality constraint',...
        'Equality constraint',...
