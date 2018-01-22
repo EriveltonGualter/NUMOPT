@@ -5,6 +5,8 @@
 clc;
 close all;
 clear variables;
+
+% Add casadi installation path:
 addpath('/Applications/MATLAB_R2017b.app/casadi-matlabR2015a-v3.3.0');
 
 %% Test derivatives:
