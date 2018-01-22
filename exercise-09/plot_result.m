@@ -5,7 +5,7 @@ ang = 0:0.01:2*pi;
 xp  = R*cos(ang);
 yp  = R*sin(ang);
 
-n = 10;
+n = 1000;
 x1eq = linspace(-R,R,n)';
 x2eq = x1eq;
 
