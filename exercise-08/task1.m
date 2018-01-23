@@ -52,9 +52,9 @@ disp(g2L);
 [Q,R] = qr([2*w(1); 2*w(2)]);
 Z = Q;
 H = Z'*g2L*Z;  % reduced hession (script p.94)
-sumH = sum(sum(H));
+eps = 0;
 SOSC_state = 'NOT holds';
-if sumH > 0
+if all(eig(H) > eps)  % all eigenvalueas are positive definite
     SOSC_state = 'Holds';
 end
 disp(['Proove if SOSC holds: ', SOSC_state]);
