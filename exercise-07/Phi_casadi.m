@@ -5,7 +5,7 @@ function [ F ] = Phi_casadi(U,param)
 X = zeros(param.N+1,1);
 X(1) = param.x0;
 for k = 1:param.N
-    X(k+1) = X(k) + param.h*X(k) - param.h*X(k)^2 + param.h*U(k);
+    X(k+1) = X(k) + param.h*X(k) - param.h*X(k)^2 + param.h*U(k).evaluate();
 end
 F = U'*U + param.q*X(end)^2;
 end

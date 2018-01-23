@@ -68,9 +68,8 @@ for k = N:-1:1  % evaluates actually all N UBar quantities
     % Differentiation of x1 = (1+h)*x(k):
     xBar(k) = xBar(k) + (1+h)*x1Bar;
 end
-J = UBar;
 
 % Add derivative of the quadratic term:
-J = 2*U + J;
+J = 2*U + UBar;
 
 end
