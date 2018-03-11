@@ -52,17 +52,17 @@ for k = 1 : maxit
     
     % Parameters for backtracking with Armijo's condition
     t     = 1.0;    % initial step length
-    beta  = 0.45;    % shrinking factor (default: 0.8)
+    beta  = 0.45;   % shrinking factor (default: 0.8)
     gamma = 0.1;    % minimal decrease requirement
     
-    x_new = x + t * p;  % candidate for the next step
+    x_new = x + t*p;  % candidate for the next step
 
     % TODO: IMPLEMENT YOUR BACKTRACKING WITH ARMIJO'S CONDITION HERE
     %       (KEEP SHRINKING 't' AND UPDATING 'x_new' UNTIL CONDITION IS SATISFIED)
     
-    while (hc_obj(x_new,param) >= hc_obj(x,param) + gamma*t*J'*p)
-        t = beta * t;  % shrink t
-        x_new = x + t * p;  % update x_new
+    while (hc_obj(x_new,param) > hc_obj(x,param) + gamma*t*J'*p)
+        t = beta*t;  % shrink t
+        x_new = x + t*p;  % update x_new
     end
     
     % Assign the step

@@ -24,7 +24,7 @@ for k=1:maxIter
     
     % Parameters for backtracking with Armijo's condition
     t     = 1.0;    % initial step length
-    beta  = 0.8;    % shrinking factor (default: 0.8)
+    beta  = 0.5;    % shrinking factor (default: 0.8)
     gamma = 0.1;    % minimal decrease requirement
     
     u_new = u + t*p;  % candidate for the next step

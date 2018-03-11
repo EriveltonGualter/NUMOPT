@@ -6,7 +6,7 @@ function [] = test_derivatives(N)
     param.N = N;          % number of discretization steps
     param.x0 = 0.6;       % init condition
     param.T  = 5;         % terminal time
-    param.q  = 50;        % terminal weight
+    param.q  = 20;        % terminal weight
     h = param.T/param.N;  % interval length
 
     Utst = rand(param.N,1);  % random control trajectory
